@@ -35,15 +35,22 @@ import { Card,CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
         }
     }
     const DishDetail = (props) => {
-        return (
-            <div className="row">
-                <RenderDish dish={props.selectedDish} />
-                <div className="col-12 col-md-5 m-1 list-unstyled">
-                <div><h4>Comments</h4></div>
-                    <RenderComments dish={props.selectedDish} />
+        if (props.selectedDish != null) {
+            return (
+                <div className="row">
+                    <RenderDish dish={props.selectedDish} />
+                    <div className="col-12 col-md-5 m-1 list-unstyled">
+                        <div><h4>Comments</h4></div>
+                        <RenderComments dish={props.selectedDish} />
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div></div>
+            );
+        }
+        
     };
 
 export default DishDetail;
