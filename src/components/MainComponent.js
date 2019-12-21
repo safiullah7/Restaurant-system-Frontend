@@ -8,6 +8,7 @@ import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
+import About from './AboutComponent';
 import DishDetail from './DishdetailComponent';
 import {Switch,Route,Redirect} from 'react-router-dom';
 import { parse } from 'querystring';
@@ -45,6 +46,7 @@ class Main extends Component {
           <Route path="/contactus" component={Contact} />
           <Route exact path="/menu" component={ () => <Menu dishes={this.state.dishes}/> } />
           <Route path="/menu/:dishid" component={DishWithId}/>
+          <Route path="/aboutus" component={() => <About leaders={this.state.leaders} />} />
           <Redirect to="/home" />
         </Switch>
         <Footer/>
