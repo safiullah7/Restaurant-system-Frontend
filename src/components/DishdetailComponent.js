@@ -3,6 +3,9 @@ import { Card,CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem
     Modal, ModalHeader, ModalBody, Row, Col, Button, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
+import {Loading} from './LoadingComponent';
+import {baseUrl} from '../shared/baseUrl';
+
 
 const minLength = (len) => (val) => val && (val.length >= len);
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -87,12 +90,28 @@ class CommentForm extends Component {
     }
 } 
 
-    function RenderDish({dish}){
-        if(dish != null) {
+    function RenderDish({dish,isLoading,errMess}){
+        if(isLoading) {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <Loading/>
+                    </div>
+                </div>
+            );
+        } else if(errMess) {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <h4>{errMess}</h4>
+                    </div>
+                </div>
+            );
+        } else if(dish != null) {
             return (
                 <div className="col-12 col-md-5 m-1">
                     <Card>
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
+                        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                         <CardBody>
                             <CardTitle>{dish.name}</CardTitle>
                             <CardText>{dish.description}</CardText> 
@@ -141,7 +160,7 @@ class CommentForm extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <RenderDish dish={props.dish} />
+                        <RenderDish dish={props.dish} isLoading={props.isLoading} errMess={props.errMess} />
                         <RenderComments comments={props.comments}
                         addComment={props.addComment}
                         dishId={props.dish.id} />
